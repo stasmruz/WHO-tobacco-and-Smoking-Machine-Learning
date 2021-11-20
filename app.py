@@ -4,6 +4,7 @@ import pickle
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
+import pymysql
 
 from flask import Flask, jsonify, render_template
 
@@ -13,15 +14,29 @@ import datetime as dt
 #################################################
 # Database Setup
 #################################################
-# # engine = create_engine(
+# conn = pymysql.connect(
+#     host='mypostgresdb.cmpzubidxryk.us-west-2.rds.amazonaws.com',
+#     port=5432,
+#     user='root',
+#     password='Project4!',
+#     db='my_data_class_db'
+
+# )
+engine = create_engine(
+    f'postgresql://root:Project4!@mypostgresdb.cmpzubidxryk.us-west-2.rds.amazonaws.com:5432/my_data_class_db')
+
+# engine = create_engine(
 #     f'postgresql://postgres:PostGresPasscode@localhost:5432/Smokingdb')
 # # reflect an existing database into a new model
-# Base = automap_base()
+Base = automap_base()
 # # reflect the tables
-# Base.prepare(engine, reflect=True)
+Base.prepare(engine, reflect=True)
 
 # # Save reference to the table
-# smoking_data = Base.classes.smoking_data
+smoking_data = Base.classes.smoking_data
+session = Session(engine)
+
+# lat_lng = Base.classes.lat_lng
 
 #################################################
 # Flask Setup

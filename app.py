@@ -60,7 +60,7 @@ def machine_learning():
     model = pickle.load(open("model.pkl", "rb"))
     test_df = pd.read_csv("complete_xtest.csv")
     prediction = model.predict(test_df)
-    return (f"{prediction}")
+    return jsonify(f"{prediction}")
 
 
 @app.route("/api/v1.0/country")
